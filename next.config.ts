@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  "@tailwindcss/postcss": {},
+  // "@tailwindcss/postcss": {},
   experimental: {
     viewTransition: true,
   },

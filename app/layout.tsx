@@ -32,7 +32,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${inconsolata.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <main className="font-[family-name:var(--font-inconsolata-mono)]">
+          {children}
+        </main>
       </body>
     </html>
   );
