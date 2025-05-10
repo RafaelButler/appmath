@@ -119,7 +119,6 @@
   @apply text-sm;
 }
 
-a,
 .text-highlighted {
   @apply text-lime-600;
 }

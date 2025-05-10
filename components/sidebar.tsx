@@ -1,11 +1,18 @@
 "use client";
 
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "./ui/collapsible";
 
 export default function Sidebar() {
   const routes = [
-    { name: "Matemática Básica", path: "/matematica-basica" },
+    { name: "Matemática Básica", path: "/conjuntos/nocoes-logicas" },
     { name: "Matemática Avançada", path: "/matematica_avancada" },
     { name: "Matemática Aplicada", path: "/matematica_aplicada" },
     { name: "Matemática Financeira", path: "/matematica_financeira" },
@@ -14,31 +21,27 @@ export default function Sidebar() {
 
   return (
     <div className="flex flex-col mt-8">
-      <div className="p-4">
+      <div className="p-8">
         {/* <h2 className="text-lg font-semibold">Matemática Básica</h2> */}
       </div>
       <div className="p-4">
-        <SidebarLink href="#" className="list-none">
+        <SidebarLink href="/" className="mb-4 list-none">
           Comece aqui
         </SidebarLink>
 
-        <Collapse title="Matemática Básica" className="mt-4">
+        <Collapse title="Conjuntos">
           <ul className="flex flex-col gap-2">
             {routes.map((route) => (
               <li key={route.path}>
-                <SidebarLink href={route.path} className="list-none">
+                <SidebarLink
+                  href={route.path}
+                  className="list-none hover:border-l hover:border-l-lime-600"
+                >
                   {route.name}
                 </SidebarLink>
               </li>
             ))}
           </ul>
-        </Collapse>
-
-        <Collapse title="Noções Lógicas" className="mt-4">
-          <div className="collapse-content text-sm">
-            Click the "Sign Up" button in the top right corner and follow the
-            registration process.
-          </div>
         </Collapse>
       </div>
     </div>
@@ -55,14 +58,22 @@ const SidebarLink = ({
   children: React.ReactNode;
   className?: string;
 }) => {
-  const router = useRouter();
-  const isActive = true; //router.pathname === href;
+  const pathname = usePathname();
+  const isActive = pathname === href;
+
+  useEffect(() => {
+    if (isActive) {
+      document.body.classList.add("sidebar-active");
+    } else {
+      document.body.classList.remove("sidebar-active");
+    }
+  }, [isActive]);
 
   return (
     <Link
       href={href}
-      className={`flex items-center p-2 text-sm font-medium transition-colors duration-200 rounded-lg ${
-        isActive ? "" : ""
+      className={`flex items-center text-sm font-medium transition-colors duration-200 text-muted-foreground ${
+        isActive ? "font-bold" : ""
       } ${className}`}
     >
       {children}
@@ -79,10 +90,19 @@ const Collapse = ({
   children: React.ReactNode;
   className?: string;
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div tabIndex={0} className="collapse collapse-arrow bg-base-100 p-2">
-      <div className="collapse-title font-semibold">{title}</div>
-      <div className={`collapse-content text-sm ${className}`}>{children}</div>
-    </div>
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <CollapsibleTrigger className="flex cursor-pointer items-center w-full">
+        <ChevronRight
+          className={`w-5 mr-2 transition-transform ${
+            isOpen ? "transform rotate-90" : ""
+          }`}
+        />
+        {title}
+      </CollapsibleTrigger>
+      <CollapsibleContent className="ml-4 mt-4">{children}</CollapsibleContent>
+    </Collapsible>
   );
 };
