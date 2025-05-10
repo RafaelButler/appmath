@@ -1,5 +1,9 @@
+import Sidebar from "@/components/sidebar";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ModeToggle } from "@/components/toggle-theme";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inconsolata } from "next/font/google";
+import { unstable_ViewTransition as ViewTransitions } from "react";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -28,14 +32,34 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${inconsolata.variable} ${geistMono.variable} antialiased`}
-      >
-        <main className="font-[family-name:var(--font-inconsolata-mono)]">
-          {children}
-        </main>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${geistSans.variable} ${inconsolata.variable} ${geistMono.variable} antialiased`}
+        >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="flex min-h-screen flex-col md:flex-row max-w-7xl mx-auto font-[family-name:var(--font-inconsolata-mono)]">
+              <aside className="w-full border-r md:w-80 md:min-h-screen">
+                <Sidebar />
+              </aside>
+
+              <main className="w-full">
+                <header className="p-8">
+                  <div className="flex justify-end">
+                    <ModeToggle />
+                  </div>
+                </header>
+                {children}
+              </main>
+            </div>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }
