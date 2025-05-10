@@ -119,6 +119,11 @@
   @apply text-sm;
 }
 
+a,
+.text-highlighted {
+  @apply text-lime-600;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -15,7 +15,7 @@ export default function Sidebar() {
   return (
     <div className="flex flex-col mt-8">
       <div className="p-4">
-        <h2 className="text-lg font-semibold">Matemática Básica</h2>
+        {/* <h2 className="text-lg font-semibold">Matemática Básica</h2> */}
       </div>
       <div className="p-4">
         <SidebarLink href="#" className="list-none">

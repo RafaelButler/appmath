@@ -2,7 +2,7 @@ import Sidebar from "@/components/sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/toggle-theme";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inconsolata } from "next/font/google";
+import { Geist, Geist_Mono, Inconsolata, Inter } from "next/font/google";
 import { unstable_ViewTransition as ViewTransitions } from "react";
 import "./globals.css";
 
@@ -13,6 +13,11 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -35,7 +40,7 @@ export default function RootLayout({
     <ViewTransitions>
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${geistSans.variable} ${inconsolata.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${inconsolata.variable} ${inter.variable} ${geistMono.variable} antialiased`}
         >
           <ThemeProvider
             attribute="class"
@@ -43,7 +48,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex min-h-screen flex-col md:flex-row max-w-7xl mx-auto font-[family-name:var(--font-inconsolata-mono)]">
+            <div className="flex min-h-screen flex-col md:flex-row max-w-7xl mx-auto font-[family-name:var(--font-inter)]">
               <aside className="w-full border-r md:w-80 md:min-h-screen">
                 <Sidebar />
               </aside>
