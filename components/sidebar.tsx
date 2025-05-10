@@ -3,22 +3,19 @@
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible";
 
-export default function Sidebar() {
-  const routes = [
-    { name: "Matemática Básica", path: "/conjuntos/nocoes-logicas" },
-    { name: "Matemática Avançada", path: "/matematica_avancada" },
-    { name: "Matemática Aplicada", path: "/matematica_aplicada" },
-    { name: "Matemática Financeira", path: "/matematica_financeira" },
-    { name: "Matemática Estatística", path: "/matematica_estatistica" },
-  ];
+const routes = [
+  { name: "Noções Lógicas", path: "/conjuntos/nocoes-logicas" },
+  { name: "Polinomios", path: "#" },
+];
 
+export default function Sidebar() {
   return (
     <div className="flex flex-col mt-8">
       <div className="p-8">
@@ -33,10 +30,7 @@ export default function Sidebar() {
           <ul className="flex flex-col gap-2">
             {routes.map((route) => (
               <li key={route.path}>
-                <SidebarLink
-                  href={route.path}
-                  className="list-none hover:border-l hover:border-l-lime-600"
-                >
+                <SidebarLink href={route.path} className="list-none">
                   {route.name}
                 </SidebarLink>
               </li>
@@ -61,19 +55,11 @@ const SidebarLink = ({
   const pathname = usePathname();
   const isActive = pathname === href;
 
-  useEffect(() => {
-    if (isActive) {
-      document.body.classList.add("sidebar-active");
-    } else {
-      document.body.classList.remove("sidebar-active");
-    }
-  }, [isActive]);
-
   return (
     <Link
       href={href}
       className={`flex items-center text-sm font-medium transition-colors duration-200 text-muted-foreground ${
-        isActive ? "font-bold" : ""
+        isActive ? "font-bold text-highlighted bg-sidebar p-1 rounded" : ""
       } ${className}`}
     >
       {children}

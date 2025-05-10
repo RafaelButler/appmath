@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div className="min-h-screen p-8">
+    <div className="min-h-screen">
       <h1 className="text-2xl font-bold border-b pb-4 text-foreground mb-8">
         Inicio
       </h1>

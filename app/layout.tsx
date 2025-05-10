@@ -53,13 +53,13 @@ export default function RootLayout({
                 <Sidebar />
               </aside>
 
-              <main className="w-full">
+              <main className="w-full flex flex-col">
                 <header className="p-8">
                   <div className="flex justify-end">
                     <ModeToggle />
                   </div>
                 </header>
-                {children}
+                <div className="p-8 w-full md:min-h-screen">{children}</div>
               </main>
             </div>
           </ThemeProvider>
