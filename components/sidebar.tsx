@@ -10,9 +10,32 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 
-const routes = [
-  { name: "Noções Lógicas", path: "/conjuntos/nocoes-logicas" },
-  { name: "Polinomios", path: "#" },
+type Routes = {
+  name: string;
+  path: string;
+  group?: string;
+};
+
+const conjuntos: Routes[] = [
+  {
+    name: "Noções Lógicas",
+    path: "/conjuntos/nocoes-logicas",
+  },
+  { name: "Conjuntos Numéricos", path: "#" },
+];
+
+const funcoes: Routes[] = [
+  {
+    name: "Função 1",
+    path: "#",
+  },
+];
+
+const logaritmos: Routes[] = [
+  {
+    name: "Logaritmos",
+    path: "",
+  },
 ];
 
 export default function Sidebar() {
@@ -28,13 +51,65 @@ export default function Sidebar() {
 
         <Collapse title="Conjuntos">
           <ul className="flex flex-col gap-2">
-            {routes.map((route) => (
-              <li key={route.path}>
-                <SidebarLink href={route.path} className="list-none">
-                  {route.name}
-                </SidebarLink>
-              </li>
-            ))}
+            {conjuntos.map((route) =>
+              route.group ? (
+                <Collapse key={route.path} title="Alguma coisa">
+                  <li>
+                    <SidebarLink href={route.path} className="list-none">
+                      {route.name}
+                    </SidebarLink>
+                  </li>
+                </Collapse>
+              ) : (
+                <li key={route.path}>
+                  <SidebarLink href={route.path} className="list-none">
+                    {route.name}
+                  </SidebarLink>
+                </li>
+              )
+            )}
+          </ul>
+        </Collapse>
+        <Collapse title="Funções">
+          <ul className="flex flex-col gap-2">
+            {funcoes.map((route) =>
+              route.group ? (
+                <Collapse key={route.path} title="Alguma coisa">
+                  <li>
+                    <SidebarLink href={route.path} className="list-none">
+                      {route.name}
+                    </SidebarLink>
+                  </li>
+                </Collapse>
+              ) : (
+                <li key={route.path}>
+                  <SidebarLink href={route.path} className="list-none">
+                    {route.name}
+                  </SidebarLink>
+                </li>
+              )
+            )}
+          </ul>
+        </Collapse>
+        <Collapse title="Logaritmo">
+          <ul className="flex flex-col gap-2">
+            {logaritmos.map((route) =>
+              route.group ? (
+                <Collapse key={route.path} title="Alguma coisa">
+                  <li>
+                    <SidebarLink href={route.path} className="list-none">
+                      {route.name}
+                    </SidebarLink>
+                  </li>
+                </Collapse>
+              ) : (
+                <li key={route.path}>
+                  <SidebarLink href={route.path} className="list-none">
+                    {route.name}
+                  </SidebarLink>
+                </li>
+              )
+            )}
           </ul>
         </Collapse>
       </div>
@@ -80,7 +155,7 @@ const Collapse = ({
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <CollapsibleTrigger className="flex cursor-pointer items-center w-full">
+      <CollapsibleTrigger className="flex cursor-pointer items-center w-full mt-4">
         <ChevronRight
           className={`w-5 mr-2 transition-transform ${
             isOpen ? "transform rotate-90" : ""
